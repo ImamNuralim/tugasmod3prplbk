@@ -1,33 +1,42 @@
-import { useState } from 'react'
-import React from 'react';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css';
-import Form from './Form';
-import Card from './Card';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
-function App() {
-  const [praktikan, setPraktikan] = React.useState(null);
-  const addPraktikanHandler = (data) => {
-    console.log(data);
-    setPraktikan(data);
+function Counter() {
+  const [count, setCount] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
+
+  // Side effect untuk mengecek jika count mencapai angka 10
+  useEffect(() => {
+    if (count === 10) {
+      setShowMessage(true);
+    } else {
+      setShowMessage(false);
+    }
+  }, [count]);
+
+  const increment = () => {
+    setCount(count + 1);
   };
-  const removePraktikanHandler = () => {
-    setPraktikan(null);
-  };
+
   return (
-    <div className="App">
-      <h1>Kartu Praktikan</h1>
-      <Form onAddPraktikan={addPraktikanHandler} />
-      {praktikan && <>
-        <button className="delete"
-          onClick={removePraktikanHandler}> Hapus </button>
-        <Card nama={praktikan.nama}
-          kelompok={praktikan.kelompok} />
-      </>}
+    <div className="counter-container">
+      <h2> TUGAS MODUL 3 | KEL 11 </h2>
+      <h1>Counter</h1>
+      <p>
+        Nilai Counter:
+        <br />
+        {count}
+      </p>
+      <button onClick={increment}>Tambah</button>
+      {showMessage && (
+        <p className="success-message">
+          Anda telah mencapai angka 10!
+          <br />
+          Lanjutkan counter atau reload page untuk mengulang counter.
+        </p>
+      )}
     </div>
   );
-
 }
 
-export default App
+export default Counter;
